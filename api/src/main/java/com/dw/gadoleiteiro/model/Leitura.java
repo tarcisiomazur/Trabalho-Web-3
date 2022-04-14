@@ -10,14 +10,38 @@ public class Leitura {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column(unique = true)
-    private int brinco;
+    @Column
+    private double quantidade;
+
+    public double getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(double quantidade) {
+        this.quantidade = quantidade;
+    }
+
+    public Date getHora() {
+        return hora;
+    }
+
+    public void setHora(Date hora) {
+        this.hora = hora;
+    }
+
+    public Gado getGado() {
+        return gado;
+    }
+
+    public void setGado(Gado gado) {
+        this.gado = gado;
+    }
 
     @Column
-    private Date nascimento;
+    private Date hora;
 
-    @ManyToOne
-    @JoinColumn(name = "gado_id")
+    @ManyToOne()
+    @JoinColumn(name = "gado_id", nullable = false)
     private Gado gado;
 
     public long getId() {
@@ -28,27 +52,6 @@ public class Leitura {
         this.id = id;
     }
 
-    public int getBrinco() {
-        return brinco;
-    }
 
-    public void setBrinco(int brinco) {
-        this.brinco = brinco;
-    }
 
-    public Date getNascimento() {
-        return nascimento;
-    }
-
-    public void setNascimento(Date nascimento) {
-        this.nascimento = nascimento;
-    }
-
-    public Gado getGado() {
-        return gado;
-    }
-
-    public void setGado(Gado gado) {
-        this.gado = gado;
-    }
 }
