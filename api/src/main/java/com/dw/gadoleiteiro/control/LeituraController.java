@@ -27,7 +27,7 @@ public class LeituraController {
         try
         {
             List<Leitura> le = new ArrayList<Leitura>();
-            rep.findByGado(gado_id).forEach(le::add);
+            rep.findByGado_id(gado_id).forEach(le::add);
 
             if (le.isEmpty())
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);

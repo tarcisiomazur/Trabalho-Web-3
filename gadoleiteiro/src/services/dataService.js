@@ -26,23 +26,23 @@ class DataService {
     }
 
     getAllLeituras(id) {
-        return http.get("/leitura?gado_id=${data}");
+        return http.get(`/leituras?gado_id=${id}`);
     }
 
     getLeitura(id) {
-        return http.get(`/leitura/${id}`);
+        return http.get(`/leituras/${id}`);
     }
 
     createLeitura(data) {
-        return http.post("/leitura", data);
+        return http.post("/leituras", data);
     }
 
     updateLeitura(id, data) {
-        return http.put(`/leitura/${id}`, data);
+        return http.put(`/leituras/${id}`, data);
     }
 
     deleteLeitura(id) {
-        return http.delete(`/leitura/${id}`);
+        return http.delete(`/leituras/${id}`);
     }
 
 }

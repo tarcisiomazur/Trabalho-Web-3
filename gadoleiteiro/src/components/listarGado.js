@@ -10,13 +10,15 @@ export default class ListarGado extends Component {
         this.retrieveGados = this.retrieveGados.bind(this);
         this.refreshList = this.refreshList.bind(this);
         this.setGadoSel = this.setGadoSel.bind(this);
+        this.excludeLeituraSel = this.excludeLeituraSel.bind(this);
         this.searchNome = this.searchNome.bind(this);
 
         this.state = {
             gados: [],
             gadoSel: null,
             indice: -1,
-            nome: ""
+            nome: "",
+            leituras: null,
         };
     }
 
@@ -53,11 +55,20 @@ export default class ListarGado extends Component {
         });
     }
 
-    setGadoSel(artigo, index) {
-        this.setState({
-            gadoSel: artigo,
-            indice: index
-        });
+    setGadoSel(gado, index) {
+        DataService.getAllLeituras(gado.id)
+            .then(response => {
+
+                this.setState({
+                    gadoSel: gado,
+                    indice: index,
+                    leituras: response.data,
+                });
+                console.log(response.data);
+            })
+            .catch(e => {
+                console.log(e);
+            });
     }
 
     searchNome() {
@@ -65,17 +76,29 @@ export default class ListarGado extends Component {
             gadoSel: null,
             indice: -1
         });
-
-        DataService.findGadoByNome(this.state.nome)
-            .then(response => {
-                this.setState({
-                    gados: response.data
+        if(!this.state.nome){
+            this.refreshList();
+        }else {
+            DataService.findGadoByNome(this.state.nome)
+                .then(response => {
+                    this.setState({
+                        gados: response.data
+                    });
+                    console.log(response.data);
+                })
+                .catch(e => {
+                    console.log(e);
                 });
-                console.log(response.data);
-            })
-            .catch(e => {
-                console.log(e);
-            });
+        }
+    }
+
+    excludeLeituraSel(id){
+        DataService.deleteLeitura(id).then(response => {
+            this.refreshList();
+            console.log(response.data);
+        }).catch(e => {
+            console.log(e);
+        });
     }
 
     render() {
@@ -151,24 +174,54 @@ export default class ListarGado extends Component {
                                 </label>
                                 <br/>
                                 <div>
-                                    {gadoSel.leituras || gadoSel.leituras.length===0?(
+                                    {this.state.leituras == null || this.state.leituras.length===0?(
                                         <div>
                                             <span>O animal não possui leituras registradas.</span>
                                         </div>
                                     ):(
                                         <div>
-                                            <table>
-                                                <tr></tr>
+                                            <table class="table">
+                                                <thead className="thead-light">
+                                                    <tr>
+                                                        <th scope="col">Hora</th>
+                                                        <th scope="col">Quantidade</th>
+                                                        <th scope="col">Opções</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {this.state.leituras.map((leitura, i) => (
+                                                        <tr>
+                                                            <td>
+                                                                {leitura.hora}
+                                                            </td>
+                                                            <td>
+                                                                {leitura.quantidade}
+                                                            </td>
+                                                            <td>
+                                                                <a
+                                                                    title="Editar Leitura"
+                                                                    className="btn btn-sm btn-outline-primary" href={'/leitura/editar/'+leitura.id}>
+                                                                    <i className="fa-regular fa-pen-to-square"></i>
+                                                                </a>
+                                                                <button
+                                                                    title="Excluir Leitura"
+                                                                    onClick={()=>this.excludeLeituraSel(leitura.id)}
+                                                                    className="btn btn-sm btn-outline-danger">
+                                                                    <i className="fa-regular fa-rectangle-xmark"></i>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    ))}
+                                                </tbody>
                                             </table>
 
-                                            ))}
                                         </div>
                                     )}
                                 </div>
                             </div>
 
                             <Link
-                                to={"/gados/" + gadoSel.id}
+                                to={"/gado/editar/" + gadoSel.id}
                                 className="btn btn-sm btn-warning"
                                 role="button"
                             >

@@ -1,5 +1,9 @@
 package com.dw.gadoleiteiro.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -8,7 +12,7 @@ import java.util.Date;
 public class Leitura {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private int id;
 
     @Column
     private double quantidade;
@@ -21,6 +25,7 @@ public class Leitura {
         this.quantidade = quantidade;
     }
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm")
     public Date getHora() {
         return hora;
     }
@@ -40,15 +45,15 @@ public class Leitura {
     @Column
     private Date hora;
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "gado_id", nullable = false)
     private Gado gado;
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

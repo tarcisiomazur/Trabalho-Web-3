@@ -1,5 +1,8 @@
 package com.dw.gadoleiteiro.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -9,7 +12,7 @@ import java.util.List;
 public class Gado {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private int id;
 
     @Column(unique = true)
     private int brinco;
@@ -20,14 +23,14 @@ public class Gado {
     @Column
     private Date nascimento;
 
-    @OneToMany(mappedBy = "gado")
+    @OneToMany(mappedBy = "gado", fetch = FetchType.LAZY)
     private List<Leitura> leituras;
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -55,6 +58,7 @@ public class Gado {
         this.nascimento = nascimento;
     }
 
+    @JsonIgnore
     public List<Leitura> getLeituras() {
         return leituras;
     }

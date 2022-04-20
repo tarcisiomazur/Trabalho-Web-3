@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface LeituraRepository extends JpaRepository<Leitura, Integer> {
 
-    List<Leitura> findByGado(int gado_id);
+    List<Leitura> findByGado_id(int gado_id);
 
 }
