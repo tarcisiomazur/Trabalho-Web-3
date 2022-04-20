@@ -22,12 +22,12 @@ public class LeituraController {
      * GET /api/leituras : listar leituras
      */
     @GetMapping("/leituras")
-    public ResponseEntity<List<Leitura>> getAllLeituras()
+    public ResponseEntity<List<Leitura>> getAllLeituras(@RequestParam(required = true) int gado_id)
     {
         try
         {
             List<Leitura> le = new ArrayList<Leitura>();
-            rep.findAll().forEach(le::add);
+            rep.findByGado(gado_id).forEach(le::add);
 
             if (le.isEmpty())
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
