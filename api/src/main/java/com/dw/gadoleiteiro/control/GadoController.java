@@ -69,69 +69,6 @@ public class GadoController {
         }
 
     }
-    /*
-     * GET /api/gados/:id : retorna o gado dado um id
-     */
-    @GetMapping("/gados/{id}")
-    public ResponseEntity<Gado> getGado(@PathVariable("id") int id)
-    {
-        try
-        {
-            Optional<Gado> ga = rep.findById(id);
-            if (!ga.isPresent())
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-
-            return new ResponseEntity<>(ga.get(), HttpStatus.OK);
-
-
-        }
-        catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-
-    }
-    /*
-     * GET /api/gados/:id : retorna o gado dado um id
-     */
-    @GetMapping("/gados/{id}")
-    public ResponseEntity<Gado> getGado(@PathVariable("id") int id)
-    {
-        try
-        {
-            Optional<Gado> ga = rep.findById(id);
-            if (!ga.isPresent())
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-
-            return new ResponseEntity<>(ga.get(), HttpStatus.OK);
-
-
-        }
-        catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-
-    }
-    /*
-     * GET /api/gados/:id : retorna o gado dado um id
-     */
-    @GetMapping("/gados/{id}")
-    public ResponseEntity<Gado> getGado(@PathVariable("id") int id)
-    {
-        try
-        {
-            Optional<Gado> ga = rep.findById(id);
-            if (!ga.isPresent())
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-
-            return new ResponseEntity<>(ga.get(), HttpStatus.OK);
-
-
-        }
-        catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-
-    }
 
     /*
      * POST /api/gados : criar gado

@@ -12,7 +12,7 @@ export default class ListarGado extends Component {
         this.setGadoSel = this.setGadoSel.bind(this);
         this.excludeLeituraSel = this.excludeLeituraSel.bind(this);
         this.searchNome = this.searchNome.bind(this);
-
+        this.deleteGado = this.deleteGado.bind(this);
         this.state = {
             gados: [],
             gadoSel: null,
@@ -99,6 +99,19 @@ export default class ListarGado extends Component {
         }).catch(e => {
             console.log(e);
         });
+    }
+
+    deleteGado(){
+        if(this.state.gadoSel !== null && this.state.gadoSel!== undefined) {
+            DataService.deleteGado(this.state.gadoSel.id)
+                .then(response => {
+                    console.log(response.data);
+                    window.location.href = '/';
+                })
+                .catch(e => {
+                    console.log(e);
+                });
+        }
     }
 
     render() {
@@ -235,6 +248,14 @@ export default class ListarGado extends Component {
                             <p><i>Selecione um animal para visualizar suas informações.</i></p>
                         </div>
                     )}
+                </div>
+                <div className="col-md-6">
+                <button
+                    className="m-2 btn btn-sm btn-danger mr-2"
+                    onClick={this.deleteGado}
+                >
+                    Excluir
+                </button>
                 </div>
             </div>
         );

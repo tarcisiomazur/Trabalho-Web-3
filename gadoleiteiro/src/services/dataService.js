@@ -34,6 +34,7 @@ class DataService {
     }
 
     createLeitura(data) {
+        console.log(data);
         return http.post("/leituras", data);
     }
 

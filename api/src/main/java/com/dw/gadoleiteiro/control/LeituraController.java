@@ -1,6 +1,7 @@
 package com.dw.gadoleiteiro.control;
 
 import com.dw.gadoleiteiro.control.repository.LeituraRepository;
+import com.dw.gadoleiteiro.model.Gado;
 import com.dw.gadoleiteiro.model.Leitura;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -41,12 +42,33 @@ public class LeituraController {
         }
 
     }
+    /*
+     * GET /api/leituras/:id : retorna a leitura dado um id
+     */
+    @GetMapping("/leituras/{id}")
+    public ResponseEntity<Leitura> getLeitura(@PathVariable("id") int id)
+    {
+        try
+        {
+            Optional<Leitura> la = rep.findById(id);
+            if (!la.isPresent())
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+            return new ResponseEntity<>(la.get(), HttpStatus.OK);
+
+
+        }
+        catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
 
     /*
      * POST /api/leituras : criar Leitura
      */
     @PostMapping("/leituras")
-    public ResponseEntity<Leitura> createArtigo(@RequestBody Leitura l)
+    public ResponseEntity<Leitura> createLeitura(@RequestBody Leitura l)
     {
         try {
             Leitura le = rep.save(l);

@@ -10,6 +10,7 @@
     "axios": "^0.26.1",
     "bootstrap": "^5.1.3",
     "react": "^18.0.0",
+    "react-awesome-combobox": "^1.1.0",
     "react-bootstrap-datetimepicker": "^0.0.22",
     "react-datetime-picker": "^3.5.0",
     "react-dom": "^18.0.0",
